@@ -1,6 +1,6 @@
 import express, { json } from 'express';
 import StudentModel from '../models/studentModel.js';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs'; // Change the import statement
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
@@ -27,8 +27,8 @@ router.post('/student', async (req, res) => {
         }
 
         // Compare the provided password with the password in the database
-        const isMatch = await bcrypt.compare(password, user.studentpassword);
-        
+        const isMatch = await bcrypt.compare(password, user.studentpassword); // Use bcrypt.compare
+
         // If the password does not match
         if (!isMatch) {
             return res.status(400).json({
@@ -56,7 +56,7 @@ router.post('/student', async (req, res) => {
         res.status(200).json({
             success: true,
             message: "Login successful",
-            user:user,
+            user: user,
         });
 
     } catch (error) {

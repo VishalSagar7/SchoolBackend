@@ -9,7 +9,6 @@ const router = express.Router();
 
 router.post('/admin', async (req, res) => {
     const { email, password } = req.body;
-    // console.log(email, password);
 
     try {
         // Check if admin exists
@@ -18,18 +17,17 @@ router.post('/admin', async (req, res) => {
             return res.status(404).json({ success: false, message: 'Admin does not exist' });
         }
 
-        // Check if the password is correct
-        const isPasswordCorrect = (admin.password === password); // Assuming you have a matchPassword method in your admin schema
-        if (!isPasswordCorrect) {
+        // Check if the password matches (remove encryption verification)
+        if (password !== admin.password) { // Compare plain text password directly
             return res.status(401).json({ success: false, message: 'Wrong password' });
         }
 
         // If both email and password are correct
         const token = jwt.sign(
-            { id:admin._id, name: admin.name, email: admin.email, role: admin.role },
+            { id: admin._id, name: admin.name, email: admin.email, role: admin.role },
             secret_key,
             { expiresIn: '1h' }
-        )
+        );
 
         res.cookie('token', token, {
             httpOnly: true,        // Ensure the cookie can't be accessed via JavaScript
@@ -37,7 +35,7 @@ router.post('/admin', async (req, res) => {
             sameSite: 'strict',    // Prevent CSRF
             maxAge: 3600000,       // Set expiration to 1 hour
         });
-        
+
         res.status(200).json({ success: true, message: 'Login successful', admin });
 
     } catch (error) {

@@ -1,7 +1,6 @@
 import express from 'express';
 import StudentModel from '../models/studentModel.js';
-import bcrypt from 'bcrypt';
-
+import bcrypt from 'bcryptjs'; // Change the import statement
 
 const hashedPassword = async (password) => {
     const saltrounds = 10;
@@ -12,7 +11,7 @@ const hashedPassword = async (password) => {
 const router = express.Router();
 
 router.post('/student', async (req, res) => {
-    const { username, email, password, phone, standard} = req.body;
+    const { username, email, password, phone, standard } = req.body;
 
     // Check if the user already exists
     const user = await StudentModel.findOne({ studentemail: email });
@@ -50,4 +49,3 @@ router.post('/student', async (req, res) => {
 });
 
 export default router;
- 
