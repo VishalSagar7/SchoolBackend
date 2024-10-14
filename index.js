@@ -140,8 +140,8 @@ app.post('/student/logout', async (req, res) => {
      
         res.cookie('token', '', {
             httpOnly: true,      // Ensures the cookie is not accessible via JavaScript
-            secure: false,       // Set to true in production (requires HTTPS)
-            sameSite: 'strict',  // Helps prevent CSRF attacks
+            secure: true,       // Set to true in production (requires HTTPS)
+            sameSite: 'None',  // Helps prevent CSRF attacks
             expires: new Date(0) // Forces the cookie to expire immediately
         });
 
