@@ -31,7 +31,7 @@ router.post('/admin', async (req, res) => {
 
         res.cookie('token', token, {
             httpOnly: true,        // Ensure the cookie can't be accessed via JavaScript
-            secure: false,         // Set to true in production (requires HTTPS)
+            secure: true,          // Set to true in production (requires HTTPS)
             sameSite: 'strict',    // Prevent CSRF
             maxAge: 3600000,       // Set expiration to 1 hour
         });
